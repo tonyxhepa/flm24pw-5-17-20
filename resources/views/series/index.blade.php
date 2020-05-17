@@ -16,10 +16,13 @@
                         <div class="relative">
                             <a href="{{ route('seriale.show', $serie->slug) }}">
                                 <img
-                                    class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                    class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
                                     src="{{ asset('img/loader.jpg') }}"
+                                    @if(Storage::exists('public/serie/'.$serie->poster_path))
                                     data-src="{{ asset('storage/serie/'.$serie->poster_path)  }}"
-                                    alt="serie poster"
+                                    @endif
+                                    alt="{{ $serie->name}} me titra shqip"
+                                    loading="lazy"
                                 />
                             </a>
                             @if($serie->seasons)
@@ -40,11 +43,4 @@
         @endif
     </div>
     <div class="clearfix"></div>
-@endsection
-
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
 @endsection

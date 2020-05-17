@@ -13,12 +13,13 @@
                         <div id="{{ $embed->id }}" class="flex justify-around city hidden">
                             <div class="iframe-container bg-black">
                                 <iframe
-                                    class="lazy rounded-lg"
+                                    class="lazyload rounded-lg"
                                     ref="frame"
-                                    src="{{ $embed->web_url }}"
+                                    data-src="{{ $embed->web_url }}"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
+                                    loading="lazy"
                                 ></iframe>
                             </div>
                         </div>
@@ -62,10 +63,13 @@
                             <div class="w-3/12">
                                 <div class="w-full">
                                     <img
-                                        class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                        class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
                                         src="{{ asset('img/loader.jpg') }}"
+                                        @if(Storage::exists('public/movie/'.$movie->poster_path))
                                         data-src="{{ asset('storage/movie/'.$movie->poster_path)  }}"
-                                        alt="{{ $movie->title }} me titra shqip"
+                                        @endif
+                                        loading="lazy"
+                                        alt="{{ $movie->title}} me titra shqip"
                                     />
                                 </div>
                             </div>
@@ -122,20 +126,37 @@
                             <p>{{ $movie->overview }}</p>
                         </div>
                         <div class="m-2 p-2 bg-black rounded-lg">
-                            <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                 @if(!empty($movie->casts))
-                                    @foreach($movie->casts as $cast)
-                                        <div class="rounded-lg my-3 mx-1 lg:mx-2">
+                                <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                                            @foreach($movie->casts as $cast)
+                                        <div class="relative">
                                             <a href="{{ route('aktor.show', $cast->slug) }}">
-                                                <img class="lazy w-16 h-16 md:w-24 md:h-24 rounded-full mx-auto md:mx-0 md:mr-6 hover:opacity-75 transition transition-900 transition-ease-in bg-indigo"
-                                                     src="{{ asset('img/loader.jpg') }}"
-                                                     data-src="{{ asset('storage/cast/'.$cast->poster_path)  }}" />
+                                                <img
+                                                    class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                                    src="{{ asset('img/loader.jpg') }}"
+                                                    @if($cast->poster_path)
+                                                    @if(Storage::exists('public/cast/'.$cast->poster_path))
+                                                    data-src="{{ asset('storage/cast/'.$cast->poster_path)  }}"
+                                                    @endif
+                                                    @endif
+                                                    loading="lazy"
+                                                    alt="{{ $cast->name}}"
+                                                />
+                                                <noscript>
+                                                    <img
+                                                        class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                                        src="{{ asset('storage/cast/'.$cast->poster_path)  }}"
+                                                        alt="filma me titra shqip"
+                                                    />
+                                                </noscript>
                                             </a>
-                                            <div class="flex justify-center p-2 rounded-lg text-white hover:text-yellow-700"><a href="{{ route('aktor.show', $cast->slug) }}" class="text-xs">{{ $cast->name }}</a></div>
+                                            <div class="inset-x-0 absolute flex bottom-0 bg-movie p-2 font-bold rounded-lg">
+                                                <a href="{{ route('aktor.show', $cast->slug) }}" class="w-full text-sm"><h2>{{ $cast->name}}</h2></a>
+                                            </div>
                                         </div>
-                                    @endforeach
+                                            @endforeach
+                                        </div>
                                 @endif
-                            </div>
                         </div>
 
                         <div class="container mx-auto p-2 m-2">
@@ -178,10 +199,13 @@
                                 @foreach($latest as $l)
                                     <a href="{{ route('filma.show', $l->slug) }}">
                                         <img
-                                            class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                            class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
                                             src="{{ asset('img/loader.jpg') }}"
-                                            data-src="{{ asset('storage/movie/'.$movie->poster_path)  }}"
-                                            alt="movie poster"
+                                            @if(Storage::exists('public/movie/'.$l->poster_path))
+                                            data-src="{{ asset('storage/movie/'.$l->poster_path)  }}"
+                                            @endif
+                                            loading="lazy"
+                                            alt="{{ $l->title}} me titra shqip"
                                         />
                                         <h2 hidden>{{ $l->title }}</h2>
                                         <p hidden>{{ $l->overview }}</p>
@@ -206,10 +230,4 @@
             <div class="clearfix"></div>
         @endif
     </main>
-@endsection
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
 @endsection

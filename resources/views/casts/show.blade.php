@@ -7,9 +7,16 @@
             <div class="flex justify-center md:flex-row flex-wrap rounded-lg bg-gray-700 hover:bg-gray-700">
                 <div class="w-full md:w-1/4 p-4 text-gray-200">
                     <div class="flex justify-center md:float-right">
-                        <img class="lazy w-16 h-16 md:w-24 md:h-24 rounded-full mx-auto md:mx-0 md:mr-6 hover:opacity-75 transition transition-900 transition-ease-in bg-indigo"
-                            src="{{ asset('img/loader.jpg') }}"
-                            data-src="{{ asset('storage/cast/'.$cast->poster_path)  }}" />
+                        <img class="lazyload w-16 h-16 md:w-24 md:h-24 rounded-full mx-auto md:mx-0 md:mr-6 hover:opacity-75 transition transition-900 transition-ease-in bg-indigo"
+                             src="{{ asset('img/loader.jpg') }}"
+                             @if($cast->poster_path)
+                             @if(Storage::exists('public/cast/'.$cast->poster_path))
+                             data-src="{{ asset('storage/cast/'.$cast->poster_path)  }}"
+                             @endif
+                             @endif
+                             loading="lazy"
+                             alt="{{ $cast->name }}"
+                        />
                     </div>
                 </div>
                 <div class="w-full md:w-3/4 p-4 text-center md:text-left">
@@ -33,9 +40,4 @@
     </section>
     <div class="clearfix"></div>
 @endsection
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
-@endsection
+

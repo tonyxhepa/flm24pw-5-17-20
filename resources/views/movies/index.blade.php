@@ -19,10 +19,3 @@
     </section>
     <div class="clearfix"></div>
 @endsection
-
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
-@endsection

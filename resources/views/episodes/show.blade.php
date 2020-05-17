@@ -18,12 +18,13 @@
                                     <div id="{{ $embed->id }}" class="flex justify-around city hidden">
                                         <div class="iframe-container bg-black">
                                             <iframe
-                                                class="rounded-lg"
+                                                class="lazyload rounded-lg"
                                                 ref="frame"
-                                                src="{{ $embed->web_url }}"
+                                                data-src="{{ $embed->web_url }}"
                                                 frameborder="0"
                                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                                 allowfullscreen
+                                                loading="lazy"
                                             ></iframe>
                                         </div>
                                     </div>
@@ -116,9 +117,3 @@
     <div class="clearfix"></div>
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
-@endsection

@@ -10,10 +10,15 @@
                                 <div class="relative">
                                     <a href="{{ route('aktor.show', $cast->slug) }}">
                                         <img
-                                            class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                            class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
                                             src="{{ asset('img/loader.jpg') }}"
+                                            @if($cast->poster_path)
+                                            @if(Storage::exists('public/cast/'.$cast->poster_path))
                                             data-src="{{ asset('storage/cast/'.$cast->poster_path)  }}"
-                                            alt="cast poster"
+                                            @endif
+                                            @endif
+                                            loading="lazy"
+                                            alt="{{ $cast->name }}"
                                         />
                                     </a>
                                     @if($cast->movies)
@@ -36,9 +41,4 @@
     </section>
     <div class="clearfix"></div>
 @endsection
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
-@endsection
+

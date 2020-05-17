@@ -8,10 +8,13 @@
                 <div class="relative">
                     <a href="{{ route('filma.show', $movie->slug) }}">
                         <img
-                            class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                            class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
                             src="{{ asset('img/loader.jpg') }}"
+                            @if(Storage::exists('public/movie/'.$movie->poster_path))
                             data-src="{{ asset('storage/movie/'.$movie->poster_path)  }}"
-                            alt="movie poster"
+                            @endif
+                            loading="lazy"
+                            alt="{{ $movie->title}} me titra shqip"
                         />
                     </a>
                     <div class="absolute right-0 top-0 my-2 mx-1">

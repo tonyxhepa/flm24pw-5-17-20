@@ -7,9 +7,15 @@
             <div class="flex justify-center md:flex-row flex-wrap rounded-lg bg-gray-700 hover:bg-gray-700">
                 <div class="w-full md:w-1/4 p-4 text-gray-200">
                     <div class="flex justify-center md:float-right">
-                        <img class="lazy w-16 h-16 md:w-24 md:h-24 rounded-full mx-auto md:mx-0 md:mr-6 hover:opacity-75 transition transition-900 transition-ease-in bg-indigo"
+                        <img class="lazyload w-16 h-16 md:w-24 md:h-24 rounded-full mx-auto md:mx-0 md:mr-6 hover:opacity-75 transition transition-900 transition-ease-in bg-indigo"
                              src="{{ asset('img/loader.jpg') }}"
-                             data-src="{{ asset('storage/season/'.$serie->poster_path)   }}" />
+                             @if(Storage::exists('public/serie/season/'.$season->poster_path))
+                             data-src="{{ asset('storage/serie/season/'.$season->poster_path)  }}"
+                             @endif
+                             alt="{{ $season->season_number }} me titra shqip"
+                             loading="lazy"
+                             alt="{{ $serie->name }} sezoni {{ $season->season_number }} me Titra Shqip"
+                        />
                     </div>
                 </div>
                 <div class="w-full md:w-3/4 p-4 text-center md:text-left">
@@ -28,10 +34,14 @@
                     <div class="relative">
                         <a href="{{ route('episodes.show', $episode->slug) }}">
                             <img
-                                class="lazy w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
                                 src="{{ asset('img/loader.jpg') }}"
-                                data-src="{{ asset('storage/episode/'.$episode->poster_path)  }}"
-                                alt="{{ $serie->name }} {{ $season->season_number }} me Titra Shqip"
+                                @if(Storage::exists('public/serie/season/'.$season->poster_path))
+                                data-src="{{ asset('storage/serie/season/'.$season->poster_path)  }}"
+                                @endif
+                                alt="{{ $season->season_number }} me titra shqip"
+                                loading="lazy"
+                                alt="{{ $episode->name }}"
                             />
                         </a>
                         <div class="inset-x-0 absolute flex bottom-0 bg-movie p-2 font-bold rounded-lg">
@@ -44,10 +54,4 @@
         </div>
     @endif
     <div class="clearfix"></div>
-@endsection
-@section('scripts')
-    <script src="{{ asset('js/yall.min.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", yall);
-    </script>
 @endsection

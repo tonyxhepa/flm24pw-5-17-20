@@ -18,6 +18,7 @@
 {!! OpenGraph::generate() !!}
 {!! Twitter::generate() !!}
 <!-- Scripts -->
+    <script src="{{ asset('js/main.js') }}" defer></script>
 @yield('head')
 <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

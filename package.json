@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "lazysizes": "^5.2.1-rc1",
         "plyr": "^3.5.10",
         "tailwindcss": "^1.2.0",
         "vue-clickaway": "^2.2.2",
@@ -35,6 +36,7 @@
         "vue-multiselect": "^2.1.6",
         "vue-tabs-with-active-line": "^1.2.5",
         "vue-toast-notification": "^0.2.0",
-        "vuejs-smart-table": "0.0.5"
+        "vuejs-smart-table": "0.0.5",
+        "yall-js": "^3.2.0"
     }
 }

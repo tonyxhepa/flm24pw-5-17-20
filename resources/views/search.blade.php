@@ -8,7 +8,13 @@
                 @foreach($search as $s)
                     <div class="relative">
                         <a href="{{ $s->slug }}">
-                            <img-card img="{{ $s->poster_path }}"></img-card>
+                            <img
+                                class="lazyload w-full h-full rounded-lg hover:opacity-75 transition transition-900 transition-ease-in bg-yellow-900"
+                                src="{{ asset('img/loader.jpg') }}"
+                                data-src="{{ $s->poster_path }}"
+                                loading="lazy"
+                                alt="{{ $s->title}}"
+                            />
                         </a>
                         <div class="absolute right-0 top-0 my-2 mx-1">
                           <span
